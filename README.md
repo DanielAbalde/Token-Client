@@ -1,7 +1,7 @@
 <h1 align="center">Token Client</h1> 
 <p align="center">Generalizes operations with fungible and non-fungible tokens</p>
  
-[TokenClient.sol](contracts/TokenClient.sol) is a smart contract that facilitates support for fungible and non-fungible token operations. It contains a set of [TokenAbstraction](contracts/TokenAbstraction.sol) with read and transfer functions, and its implementations such as [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol) are responsible for calling the functions of each standard. For the developer, TokenClient allows to generalize the functionality with the template pattern and support new types of tokens with the proxy pattern.
+[TokenClient.sol](contracts/TokenClient.sol) is a smart contract that facilitates support for fungible and non-fungible token operations. It contains a set of [TokenAbstraction](contracts/TokenAbstraction.sol) implementations with read and transfer functions, such as [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol), which are responsible for calling the functions of each standard and do not use storage. For the developer, TokenClient allows to generalize the functionality of its operations with tokens using the template pattern, and support new token standards using the proxy pattern.
  
 
 <p align="center"><img src="./assets/TokenClientDiagram.PNG" alt="TokenClientDiagram"></p>
