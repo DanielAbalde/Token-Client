@@ -237,6 +237,37 @@ describe("TokenClient", function ()
         await expect(this.tokenClient.connect(this.account1).isStandard(lib.ERC20, this.tokens[0][1]))
         .to.be.revertedWith("TokenClient: caller not allowed");
     });
+
+    it("Example of use", async function(){
+        const tokenClient = await deploy("TokenClient");
+
+        const tokenERC20 = await deploy("TokenERC20");
+        const tokenERC721 = await deploy("TokenERC721");
+        const tokenERC1155 = await deploy("TokenERC1155");
+      
+        await tokenClient.support(tokenERC20.address);
+        await tokenClient.support(tokenERC721.address);
+        await tokenClient.support(tokenERC1155.address); 
+      
+        const contract = await deploy("ExampleOfUse", tokenClient.address);
+
+        const example721 = await deploy("TestERC721");
+        await example721.mint(this.account0.address);
+        await example721.approve(tokenClient.address, 1);
+
+        const token = lib.tokenizeERC721(example721.address, 1);
+        const price = ethers.utils.parseEther("3");
+        await contract.sell(token, price);
+
+        const balance = await ethers.provider.getBalance(this.account0.address);
+
+        await contract.connect(this.account2).buy("1", { value: price });
+
+        const newBalance = await ethers.provider.getBalance(this.account0.address);
+        expect(newBalance.sub(balance)).to.be.equal(price);
+
+        expect(await tokenClient.isOwner(token, this.account2.address)).to.be.true;
+    });
 });
   
 async function deploy(contractName, ...params){
