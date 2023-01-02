@@ -25,7 +25,7 @@ struct TokenSet
     uint256[] Amounts;  
 }
 ```
- Example of use:
+Example of use:
 
  ```solidity
 // SPDX-License-Identifier: MIT
@@ -60,9 +60,22 @@ contract ExampleOfUse
 
     function buy(uint256 id) external payable {
         Item memory item = _items[id];
-        require(item.Owner != address(0), "id doesn't exist");
+        require(item.Owner != address(0), "id not found");
         require(msg.value >= item.Price, "Not enough value");
         _client.transfer(item.Token, item.Owner, msg.sender);
     } 
 }
+```
+```js
+  const tokenClient = await deploy("TokenClient");
+
+  const tokenERC20 = await deploy("TokenERC20");
+  const tokenERC721 = await deploy("TokenERC721");
+  const tokenERC1155 = await deploy("TokenERC1155");
+
+  await tokenClient.support(tokenERC20.address);
+  await tokenClient.support(tokenERC721.address);
+  await tokenClient.support(tokenERC1155.address); 
+
+  const contract = await deploy("ExampleOfUse", tokenClient.address);
 ```

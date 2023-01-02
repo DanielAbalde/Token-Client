@@ -14,6 +14,12 @@ async function main() {
   const tokenLSP7 = await deploy("TokenLSP7");
   const tokenLSP8 = await deploy("TokenLSP8");
 
+  await tokenClient.support(tokenERC20.address);
+  await tokenClient.support(tokenERC721.address);
+  await tokenClient.support(tokenERC1155.address); 
+  await tokenClient.support(tokenLSP7.address);
+  await tokenClient.support(tokenLSP8.address);
+ 
   console.log("TokenClient:", tokenClient.address);
   console.log("TokenERC20:", tokenERC20.address);
   console.log("TokenERC721:", tokenERC721.address);
