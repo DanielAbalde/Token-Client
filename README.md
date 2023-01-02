@@ -6,6 +6,17 @@
 
 <p align="center"><img src="./assets/TokenClientDiagram.PNG" alt="TokenClientDiagram"></p>
 
+The functionality of TokenAbstraction is basic due to the differences between standards, but is sufficient for many use cases. If needed, its implementations can wrap more functionality, as is the case of TokenERC721 that includes the owner method.
+
+```solidity
+function isStandard(address contractAddress) external view returns(bool);
+function isOwner(Token calldata token, address account) external view returns (bool);
+function isOwnerSet(TokenSet calldata tokenSet, address account) external view returns (bool);
+function isApproved(Token calldata token, address account, address operator) external view returns (bool);
+function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) external view returns (bool);
+function transfer(Token calldata token, address from, address to) external returns (bool);
+function transferSet(TokenSet calldata tokenSet, address from, address to) external returns (bool);
+```
 The functionality uses the [Token](contracts/Token.sol) and [TokenSet](contracts/TokenSet.sol) structures. Token represents for fungibles a quantity of tokens while for non-fungibles it represents a single element. TokenSet represents for non-fungible tokens a set of unique elements. The token id is of type bytes32 instead of uint256 to support more powerful NFTs.
 
  ```solidity
