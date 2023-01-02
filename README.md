@@ -47,7 +47,7 @@ import "https://github.com/DanielAbalde/TokenClient/blob/master/contracts/TokenC
 /*
     Simple buy/sell mechanism but potentially supports any standard
 
-    This is how to suport ERC20, ERC721 and ERC1155:
+    This is how to suport ERC20, ERC721 and ERC1155 using ethers.js:
 
     const tokenClient = await deploy("TokenClient");
 
