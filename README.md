@@ -8,7 +8,7 @@
 
 The functionality uses the [Token](contracts/Token.sol) and [TokenSet](contracts/TokenSet.sol) structures. Token represents for fungibles a quantity of tokens while for non-fungibles it represents a single element. TokenSet represents for non-fungible tokens a set of unique elements. The token id is of type bytes32 instead of uint256 to support more powerful NFTs.
 
- ```cs
+ ```solidity
 struct Token
 {
     bytes32 Standard;
