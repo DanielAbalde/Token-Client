@@ -25,7 +25,4 @@ struct TokenSet
     uint256[] Amounts;  
 }
 ```
-
-
-
-Examples of use are: 
+ 

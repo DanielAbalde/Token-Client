@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GNU-3
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
  
 import "@lukso/lsp-smart-contracts/contracts/LSP7DigitalAsset/LSP7DigitalAsset.sol";

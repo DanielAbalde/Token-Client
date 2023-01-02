@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GNU-3
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
