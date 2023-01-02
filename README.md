@@ -44,6 +44,22 @@ pragma solidity ^0.8.9;
 
 import "https://github.com/DanielAbalde/TokenClient/blob/master/contracts/TokenClient.sol";
 
+/*
+    Simple buy/sell mechanism but potentially supports any standard
+
+    This is how to suport ERC20, ERC721 and ERC1155:
+
+    const tokenClient = await deploy("TokenClient");
+
+    const tokenERC20 = await deploy("TokenERC20");
+    const tokenERC721 = await deploy("TokenERC721");
+    const tokenERC1155 = await deploy("TokenERC1155");
+    
+    await tokenClient.support(tokenERC20.address);
+    await tokenClient.support(tokenERC721.address);
+    await tokenClient.support(tokenERC1155.address); 
+*/
+
 contract ExampleOfUse
 {
     struct Item
