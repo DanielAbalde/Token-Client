@@ -1,5 +1,4 @@
 const { ethers } = require("hardhat"); 
-const fs = require('fs');
 
 exports.ERC20 = ethers.utils.formatBytes32String("ERC20");
 exports.ERC721 = ethers.utils.formatBytes32String("ERC721");
@@ -7,8 +6,6 @@ exports.ERC1155 = ethers.utils.formatBytes32String("ERC1155");
 exports.ERC777 = ethers.utils.formatBytes32String("ERC777");
 exports.LSP7 = ethers.utils.formatBytes32String("LSP7DigitalAsset");
 exports.LSP8 = ethers.utils.formatBytes32String("LSP8IdentifiableDigitalAsset");
-
-exports.tokenClientABI = JSON.parse(fs.readFileSync("./artifacts/contracts/TokenClient.sol/TokenClient.json")).abi;   
  
 exports.tokenizeERC20 = function(contractAddress, amount){
     return [exports.ERC20, contractAddress, ethers.constants.HashZero, amount];

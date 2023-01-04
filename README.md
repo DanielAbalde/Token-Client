@@ -1,7 +1,14 @@
 <h1 align="center">Token Client</h1> 
-<p align="center">Generalizes operations with fungible and non-fungible tokens</p>
+<p align="center">Generalize and simplify operations with fungible and non-fungible tokens</p>
  
-[TokenClient.sol](contracts/TokenClient.sol) is a smart contract that facilitates support for fungible and non-fungible token operations. It contains a set of [TokenAbstraction](contracts/TokenAbstraction.sol) implementations with read and transfer functions, such as [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol), which are responsible for calling the functions of each standard and do not use storage. For the developer, TokenClient allows to generalize the functionality of its operations with tokens using the template pattern, and support new token standards using the proxy pattern.
+<p align="center" style="font-style: italic">⚠️<small>These contracts have not yet been audited</small>⚠️</p>
+
+
+```md
+npm i @danielabalde/token-client
+```
+
+[TokenClient.sol](contracts/TokenClient.sol) is a smart contract that facilitates support for fungible and non-fungible token operations. It contains a set of [TokenAbstraction](contracts/TokenAbstraction.sol) implementations with read and transfer functions and without storage (see [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol)), which are responsible for calling the functions of each standard. For the developer, TokenClient allows to generalize the functionality of its operations with tokens using the template pattern, and support new token standards using the proxy pattern.
  
 
 <p align="center"><img src="./assets/TokenClientDiagram.PNG" alt="TokenClientDiagram"></p>
@@ -42,7 +49,7 @@ Example of use:
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "https://github.com/DanielAbalde/TokenClient/blob/master/contracts/TokenClient.sol";
+import "@danielabalde/token-client/contracts/TokenClient.sol";
 
 /*
     Simple buy/sell mechanism but potentially supports any standard

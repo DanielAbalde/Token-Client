@@ -1,19 +1,44 @@
 {
-  "name": "tokenabstract",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@danielabalde/token-client",
+  "version": "1.0.1",
+  "description": "Smart Contracts to generalize and simplify operations with fungible and non-fungible tokens",
+  "files": [
+    "contracts/*.sol",
+    "contracts/concretes/*.sol",
+    "artifacts/contracts/TokenClient.sol/TokenClient.json",
+    "artifacts/contracts/TokenAbstraction.sol/TokenAbstraction.json",
+    "artifacts/contracts/concretes/TokenERC20.sol/TokenERC20.json",
+    "artifacts/contracts/concretes/TokenERC721.sol/TokenERC721.json",
+    "artifacts/contracts/concretes/TokenERC1155.sol/TokenERC1155.json",
+    "artifacts/contracts/concretes/TokenLSP7.sol/TokenLSP7.json",
+    "artifacts/contracts/concretes/TokenLSP8.sol/TokenLSP8.json",
+    "scripts/TokenClient.js"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Daniel Abalde",
   "license": "ISC",
-  "dependencies": {
-    "@lukso/lsp-smart-contracts": "^0.7.0",
-    "@openzeppelin/contracts": "^4.8.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielAbalde/Token-Client"
   },
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
-    "hardhat": "^2.12.5"
-  }
+  "bugs": {
+    "url": "https://github.com/DanielAbalde/Token-Client/issues"
+  },
+  "homepage": "https://github.com/DanielAbalde/Token-Client",
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "marketplace",
+    "erc20",
+    "nft",
+    "multitokens",
+    "erc721",
+    "erc1155",
+    "generic",
+    "token"
+  ]
 }
