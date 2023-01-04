@@ -65,6 +65,10 @@ import "@danielabalde/token-client/contracts/TokenClient.sol";
     await tokenClient.support(tokenERC20.address);
     await tokenClient.support(tokenERC721.address);
     await tokenClient.support(tokenERC1155.address); 
+
+    const contract = await deploy("ExampleOfUse", tokenClient.address);
+
+    (...)
 */
 
 contract ExampleOfUse
