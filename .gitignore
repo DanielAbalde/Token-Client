@@ -5,6 +5,8 @@ coverage.json
 typechain
 typechain-types
 npm
+.npmrc
+
 # Hardhat files
 cache
 artifacts
