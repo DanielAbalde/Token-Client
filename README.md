@@ -105,3 +105,6 @@ contract ExampleOfUse
     } 
 }
 ```
+
+Other projects using it:
+- [Challenge To Claim](https://github.com/DanielAbalde/Challenge-To-Claim-Token)
