@@ -108,3 +108,10 @@ contract ExampleOfUse
 
 Other projects using it:
 - [Challenge To Claim](https://github.com/DanielAbalde/Challenge-To-Claim-Token)
+
+
+## ☕ Contribute 
+* Issues and Pull Request on Github are welcome. 
+* Invite me a coffee at daniga.eth or 0x4443049b49Caf8Eb4E9235aA1Efe38FcFA0055a1
+* Share it on social media!
+* Give a ⭐ to this project!
