@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /*
     @title Token Client
-    @author Daniel Gonzalez Abalde aka DaniGA
+    @author Daniel Abalde | DaniGA#9856
     @notice 
 */
 contract TokenClient is Ownable
