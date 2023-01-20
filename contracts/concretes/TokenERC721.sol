@@ -28,6 +28,9 @@ contract TokenERC721 is TokenAbstraction
     function _isOwner(Token memory token, address account) internal view override virtual returns (bool){
         return _owner(token) == account;
     } 
+    function _balanceOf(Token memory token, address account) internal view override virtual returns (uint256){
+        return _owner(token) == account ? 1 : 0;
+    }
     function _isApproved(Token memory token, address account, address operator) internal view override virtual returns (bool) {
         return IERC721(token.Contract).isApprovedForAll(account, operator) || IERC721(token.Contract).getApproved(uint256(token.Id)) == operator;
     }

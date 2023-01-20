@@ -22,9 +22,12 @@ contract TokenLSP8 is TokenAbstraction
             return false;
         } 
     } 
+    function _balanceOf(Token memory token, address account) internal view override virtual returns (uint256){
+        return _isOwner(token, account) ? 1 : 0;
+    }
     function _isApproved(Token memory token, address /*account*/, address operator) internal view override virtual returns (bool) {
         return ILSP8IdentifiableDigitalAsset(token.Contract).isOperatorFor(operator, token.Id);
-    }
+    } 
     function _transfer(Token memory token, address from, address to) internal override virtual returns (bool){    
         ILSP8IdentifiableDigitalAsset(token.Contract).transfer(from, to, token.Id, true, "");
         return true;

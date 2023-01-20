@@ -25,12 +25,16 @@ contract TokenERC20 is TokenAbstraction
         }
         return true;
     }
+
     function _isOwner(Token memory token, address account) internal view override virtual returns (bool){
         try IERC20(token.Contract).balanceOf(account) returns (uint256 balance){
             return balance >= token.Amount;
         }catch{
             return false;
         }
+    }
+    function _balanceOf(Token memory token, address account) internal view override virtual returns (uint256){
+        return IERC20(token.Contract).balanceOf(account);
     }
     function _isApproved(Token memory token, address account, address operator) internal view override virtual returns (bool) {
         try IERC20(token.Contract).allowance(account, operator) returns (uint256 balance){

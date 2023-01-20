@@ -18,7 +18,9 @@ contract TokenLSP7 is TokenAbstraction
     function _isOwner(Token memory token, address account) internal view override virtual returns (bool){
         return ILSP7DigitalAsset(token.Contract).balanceOf(account) >= token.Amount;
     } 
-
+    function _balanceOf(Token memory token, address account) internal view override virtual returns (uint256){
+        return ILSP7DigitalAsset(token.Contract).balanceOf(account);
+    }
     function _isApproved(Token memory token, address account, address operator) internal view override virtual returns (bool) {
         return ILSP7DigitalAsset(token.Contract).authorizedAmountFor(operator, account) >= token.Amount;
     }

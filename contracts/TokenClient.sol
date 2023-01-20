@@ -11,8 +11,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 */
 contract TokenClient is Ownable
 {
+    // Maps standard id to
     bytes32[] internal _standards;
     mapping(bytes32=>address) internal _abstractions;
+
     address[] internal _allowedCallers;
     mapping(address=>bool) internal _callerAllowed;
    
@@ -43,12 +45,8 @@ contract TokenClient is Ownable
 
     // ################################## EXTERNAL ##################################
     
-    
     function getAbstraction(bytes32 standard) onlyAllowed() external view returns(address){ return _abstractions[standard]; }
-    /*
 
-        @return 
-    */
     function supportedStandards() onlyAllowed() external view returns(bytes32[] memory){ return _standards; }
     
     function supportsStandard(bytes32 standard) onlyAllowed() external view returns(bool){ return _supportsStandard(standard); }
@@ -56,17 +54,15 @@ contract TokenClient is Ownable
     function isStandard(bytes32 standard, address contractAddress) onlyAllowed() standardSupported(standard) external view returns(bool) { 
         return TokenAbstraction(_abstractions[standard]).isStandard(contractAddress);
     } 
+
     function isOwner(Token calldata token, address account) onlyAllowed() standardSupported(token.Standard) external view returns (bool) { 
         return TokenAbstraction(_abstractions[token.Standard]).isOwner(token, account);
-    }
-    function isOwnerSet(TokenSet calldata tokenSet, address account) onlyAllowed() standardSupported(tokenSet.Standard) external view returns (bool) { 
-        return TokenAbstraction(_abstractions[tokenSet.Standard]).isOwnerSet(tokenSet, account);
     }
     function isApproved(Token calldata token, address account, address operator) onlyAllowed() standardSupported(token.Standard) external view virtual returns (bool){
         return TokenAbstraction(_abstractions[token.Standard]).isApproved(token, account, operator);
     }
-    function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) onlyAllowed() standardSupported(tokenSet.Standard) external view virtual returns (bool){
-        return TokenAbstraction(_abstractions[tokenSet.Standard]).isApprovedSet(tokenSet, account, operator);
+    function balanceOf(Token calldata token, address account) onlyAllowed() standardSupported(token.Standard) external view virtual returns (uint256){
+        return TokenAbstraction(_abstractions[token.Standard]).balanceOf(token, account);
     }
     function transfer(Token calldata token, address from, address to) onlyAllowed() standardSupported(token.Standard) external virtual returns (bool success){  
         bytes memory resultData = _delegatecall(token.Standard, abi.encodeWithSelector(bytes4(0x8c5b2f8e), token, from, to)); 
@@ -74,6 +70,16 @@ contract TokenClient is Ownable
         if(success){
             emit TokenTransfered(token, from, to);
         } 
+    } 
+
+    function isOwnerSet(TokenSet calldata tokenSet, address account) onlyAllowed() standardSupported(tokenSet.Standard) external view returns (bool) { 
+        return TokenAbstraction(_abstractions[tokenSet.Standard]).isOwnerSet(tokenSet, account);
+    }
+    function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) onlyAllowed() standardSupported(tokenSet.Standard) external view virtual returns (bool){
+        return TokenAbstraction(_abstractions[tokenSet.Standard]).isApprovedSet(tokenSet, account, operator);
+    } 
+    function balanceOfSet(TokenSet calldata tokenSet, address account) onlyAllowed() standardSupported(tokenSet.Standard) external view virtual returns (uint256[] memory){
+        return TokenAbstraction(_abstractions[tokenSet.Standard]).balanceOfSet(tokenSet, account);
     } 
     function transferSet(TokenSet calldata tokenSet, address from, address to) onlyAllowed() standardSupported(tokenSet.Standard) external virtual returns (bool success){  
         bytes memory resultData = _delegatecall(tokenSet.Standard, abi.encodeWithSelector(bytes4(0xd4144fc8), tokenSet, from, to)); 

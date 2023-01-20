@@ -18,15 +18,21 @@ contract TokenERC1155 is TokenAbstraction
     function _isOwner(Token memory token, address account) internal view override virtual returns (bool){
         return IERC1155(token.Contract).balanceOf(account, uint256(token.Id)) >= token.Amount;
     } 
+    function _balanceOf(Token memory token, address account) internal view override virtual returns (uint256){
+        return IERC1155(token.Contract).balanceOf(account, uint256(token.Id));
+    }
     function _isApproved(Token memory token, address account, address operator) internal view override virtual returns (bool) {
         return IERC1155(token.Contract).isApprovedForAll(account, operator);
     }
-    function _isApprovedSet(TokenSet memory tokenSet, address account, address operator) internal view override virtual returns (bool){
-        return IERC1155(tokenSet.Contract).isApprovedForAll(account, operator);
-    }
+
+ 
     function _transfer(Token memory token, address from, address to) internal override virtual returns (bool){    
         IERC1155(token.Contract).safeTransferFrom(from, to, uint256(token.Id), token.Amount, "");  
         return true;
+    }
+
+    function _isApprovedSet(TokenSet memory tokenSet, address account, address operator) internal view override virtual returns (bool){
+        return IERC1155(tokenSet.Contract).isApprovedForAll(account, operator);
     }
     function _transferSet(TokenSet memory tokenSet, address from, address to) internal override virtual returns (bool){
         uint256[] memory tokenIds = new uint256[](tokenSet.Ids.length);

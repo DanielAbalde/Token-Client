@@ -15,10 +15,13 @@ contract TokenERC777 is TokenAbstraction
             return false;
         }
     }
+    
     function _isOwner(Token memory token, address account) internal view override virtual returns (bool){
         return IERC777(token.Contract).balanceOf(account) >= token.Amount;
     } 
-
+    function _balanceOf(Token memory token, address account) internal view override virtual returns (uint256){
+        return IERC777(token.Contract).balanceOf(account);
+    }
     function _isApproved(Token memory token, address account, address operator) internal view override virtual returns (bool) {
         return IERC777(token.Contract).isOperatorFor(operator, account);
     }
