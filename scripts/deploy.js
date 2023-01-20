@@ -5,6 +5,13 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+  
+async function deploy(contractName, ...params){
+  const factory = await hre.ethers.getContractFactory(contractName);
+  const contract = await factory.deploy(...params); 
+  await contract.deployed(); 
+  return contract;
+}
 
 async function main() {
   const tokenClient = await deploy("TokenClient");
@@ -34,10 +41,3 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
-  
-async function deploy(contractName, ...params){
-  const factory = await hre.ethers.getContractFactory(contractName);
-  const contract = await factory.deploy(...params); 
-  await contract.deployed(); 
-  return contract;
-}

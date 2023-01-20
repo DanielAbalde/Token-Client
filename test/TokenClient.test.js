@@ -161,7 +161,7 @@ describe("TokenClient", function ()
         expect(await this.tokenClient.isOwner(lib.tokenizeLSP8(this.testLSP8.address, 33), this.account0.address)).to.be.false;  
 
     });
-
+      
     it("Is approved", async function(){
         expect(await this.tokenClient.isApproved(this.tokens[0], this.account0.address, this.tokenClient.address)).to.be.true; 
         expect(await this.tokenClient.isApproved(lib.tokenizeERC20(this.testERC20.address, 20), this.account0.address, this.tokenClient.address)).to.be.true; 
@@ -249,7 +249,7 @@ describe("TokenClient", function ()
         await tokenClient.support(tokenERC721.address);
         await tokenClient.support(tokenERC1155.address); 
       
-        const contract = await deploy("ExampleOfUse", tokenClient.address);
+        const contract = await deploy("Market", tokenClient.address);
 
         const example721 = await deploy("TestERC721");
         await example721.mint(this.account0.address);
