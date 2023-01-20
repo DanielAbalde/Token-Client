@@ -1,30 +1,77 @@
 <h1 align="center">Token Client</h1> 
-<p align="center">Generalize and simplify operations with fungible and non-fungible tokens</p>
- 
-<p align="center" style="font-style: italic">⚠️<small>These contracts have not yet been audited</small>⚠️</p>
+<h2 align="center">Develop token-agnostic operations</h2> 
+<h3 align="center">Generalize and simplify support for fungible and non-fungible tokens</h3>
+<p align="center" style="font-style: italic">⚠️<small>Contracts not audited</small>⚠️</p>
 
 
-```md
-npm i @danielabalde/token-client
-```
 
-[TokenClient.sol](contracts/TokenClient.sol) is a smart contract that facilitates support for fungible and non-fungible token operations. It contains a set of [TokenAbstraction](contracts/TokenAbstraction.sol) implementations with read and transfer functions and without storage (see [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol)), which are responsible for calling the functions of each standard. For the developer, TokenClient allows to generalize the functionality of its operations with tokens using the template pattern, and support new token standards using the proxy pattern.
- 
+## 🧐 Overview
+
+[TokenClient.sol](contracts/TokenClient.sol) is a smart contract to support fungible and non-fungible token operations in your dapp in a token-agnostic way, for easy, quick, elegant, generic and future-proof implementations of token algorithms. 
+
+
+You can reference a client instance on your dapp or inherit from the client contract. Then register on the client some [TokenAbstraction](contracts/TokenAbstraction.sol) concrete, such as [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol), which have view and transfer functions but no storage, to make your dapp support them. Then you can implement your algorithm once using the client as interface to operate with any given token, and it takes care for you of calling the standard-specific functionality, so you can focus on the logic of your dapp without worrying about standards support, separating this decision from the implementation and allowing it to be defined at any time.
 
 <p align="center"><img src="./imgs/TokenClientDiagram.PNG" alt="TokenClientDiagram"></p>
 
-The functionality of TokenAbstraction is basic due to the differences between standards, but is sufficient for many use cases. If needed, its implementations can wrap more functionality, as is the case of TokenERC721 that includes the owner method.
+## 🚀 Motivation
+
+When you start a project that operated with NFT, such as swappers or marketplaces, you are faced with the dilemma of making the functionality specific to each standard or making it generic. In the first case it becomes a mess if you use proxies; and in the generic case there is extra work that each project has to do. In both cases, it makes sense to externalize this logic to save time and make it more elegant and advanced.
+
+On the other hand, I am quite convinced that in a few years there will be new standards for NFT and fungible tokens, not only because of their current limitations, but also because replacing EOAs with contract-based accounts may improve the current patterns.
+ 
+## 🌟 Features
+- Easy to use, query and transfer any token from one place.
+- Quick to implement, focus on your contract logic in a token-agnostic manner.
+- Generic functionality, make your dapp operate generically with tokens.
+- More elegant, reduces complexity and redundancy in your logic.
+- Future-proof, your contract will be able to support any new token standard.
+- Standard identification, knows what type of token a contract address is.
+- Transfer event, monitors when any token has been transferred.
+- Call permission, controls from where the client can be called.
+- Install as a package: `npm i @danielabalde/token-client`.
+
+
+## ⚙️ Token functionality
+
+The shared functionality between standards is enough to help marketplaces and operators in many use cases. It can be extended particullary, as is the case of [TokenERC721](contracts/concretes/TokenERC721.sol), where it includes the `owner()` function. Or you can extending it with a custom token operator by inheriting from [TokenAbstraction](contracts/TokenAbstraction.sol).
+
+You can use [TokenClient.sol](contracts/TokenClient.sol) as an interface to have the same logic for any token standard you want to support. You can see the functionality in the following (note that is shown without function bodies for simplicity).
 
 ```solidity
-function isStandard(address contractAddress) external view returns(bool);
-function isOwner(Token calldata token, address account) external view returns (bool);
-function isOwnerSet(TokenSet calldata tokenSet, address account) external view returns (bool);
-function isApproved(Token calldata token, address account, address operator) external view returns (bool);
-function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) external view returns (bool);
-function transfer(Token calldata token, address from, address to) external returns (bool);
-function transferSet(TokenSet calldata tokenSet, address from, address to) external returns (bool);
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./TokenAbstraction.sol"; 
+import "@openzeppelin/contracts/access/Ownable.sol";
+ 
+contract TokenClient is Ownable
+{ 
+    (...)
+
+    event StandardSupported(bytes32 indexed standard);
+    event StandardReplaced(bytes32 indexed standard, address indexed previous);
+    event StandardUnsupported(bytes32 indexed standard);
+    event TokenTransfered(Token indexed token, address indexed from, address indexed to);
+    event TokenSetTransfered(TokenSet indexed tokenSet, address indexed from, address indexed to);
+
+    function isStandard(address contractAddress) external view returns(bool);
+
+    function isOwner(Token calldata token, address account) external view returns (bool);
+    function balanceOf(Token calldata token, address account) external view returns (uint256);
+    function isApproved(Token calldata token, address account, address operator) external view returns (bool);
+    function transfer(Token calldata token, address from, address to) external returns (bool);
+    
+    function isOwnerSet(TokenSet calldata tokenSet, address account) external view returns (bool);
+    function balanceOfSet(TokenSet calldata tokenSet, address account) external view returns (uint256[] memory);
+    function isApprovedSet(TokenSet calldata tokenSet, address account, address operator)  external view returns (bool);
+    function transferSet(TokenSet calldata tokenSet, address from, address to) external returns (bool);
+
+    (...)
+}
 ```
-The functionality uses the [Token](contracts/Token.sol) and [TokenSet](contracts/TokenSet.sol) structures. Token represents for fungibles a quantity of tokens while for non-fungibles it represents a single element. TokenSet represents for non-fungible tokens a set of unique elements. The token id is of type bytes32 instead of uint256 to support more powerful NFTs.
+## 📦 Token data
+ [Token](contracts/Token.sol) represents for fungibles a quantity of tokens, and for non-fungibles an identificable token. [TokenSet](contracts/TokenSet.sol) represents for non-fungible a set of unique tokens. The token id is of type `bytes32` instead of `uint256` to support more powerful NFTs.
 
  ```solidity
 struct Token
@@ -43,46 +90,45 @@ struct TokenSet
     uint256[] Amounts;  
 }
 ```
-Example of use:
+## 📖 Example
+Define token support for ERC20, ERC721 and ERC1155 in a minimal buy/sell mechanism:
 
- ```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
 
-import "@danielabalde/token-client/contracts/TokenClient.sol";
-
-/*
-    Simple buy/sell mechanism but potentially supports any standard
-
-    This is how to suport ERC20, ERC721 and ERC1155 using ethers.js:
+ ```js
+    // using ethers.js and ./scripts/deploy.js
 
     const tokenClient = await deploy("TokenClient");
 
     const tokenERC20 = await deploy("TokenERC20");
     const tokenERC721 = await deploy("TokenERC721");
     const tokenERC1155 = await deploy("TokenERC1155");
-    
+           
     await tokenClient.support(tokenERC20.address);
     await tokenClient.support(tokenERC721.address);
     await tokenClient.support(tokenERC1155.address); 
 
-    const contract = await deploy("ExampleOfUse", tokenClient.address);
+    const market = await deploy("Market", tokenClient.address);
+```
 
-    (...)
-*/
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
 
-contract ExampleOfUse
+import "@danielabalde/token-client/contracts/TokenClient.sol";
+
+contract Market
 {
     struct Item
     {
         Token Token;
         uint256 Price;
         address Owner;
-    }
+    } 
+   
+    TokenClient _client;
 
-    TokenClient private _client;
-    mapping(uint256=>Item) private _items;
-    uint256 private _itemCount;
+    mapping(uint256=>Item) _items;
+    uint256 _itemCount;
 
     constructor(address tokenClient) {
         _client = TokenClient(tokenClient);
@@ -90,7 +136,7 @@ contract ExampleOfUse
 
     function sell(Token calldata token, uint256 price) external returns(uint256 id) {
         require(_client.isOwner(token, msg.sender), "Not the owner");
-        require(_client.isApproved(token, msg.sender, address(_client)), "Not approved");
+        require(_client.isApproved(token, msg.sender, address(_client)), "TokenClient not approved by owner");
         require(price > 0, "Price is zero"); 
         id = ++_itemCount;
         _items[id] = Item(token, price, msg.sender);
@@ -106,8 +152,14 @@ contract ExampleOfUse
 }
 ```
 
-Other projects using it:
-- [Challenge To Claim](https://github.com/DanielAbalde/Challenge-To-Claim-Token)
+## 🔌 install with npm
+```md
+npm i @danielabalde/token-client
+```
+
+## 📌 Other projects using it:
+- [Challenge To Claim](https://github.com/DanielAbalde/Challenge-To-Claim-Token). Put tokens under a challenge such as a quiz, whoever solves or finds the solution claims the tokens.
+
 
 
 ## ☕ Contribute 
