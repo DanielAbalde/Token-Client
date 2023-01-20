@@ -1,6 +1,6 @@
 {
   "name": "@danielabalde/token-client",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Smart Contracts to generalize and simplify operations with fungible and non-fungible tokens",
   "files": [
     "contracts/*.sol",
