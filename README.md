@@ -1,5 +1,5 @@
 <h1 align="center">Token Client</h1> 
-<h2 align="center">Token-agnostic mechanism</h2> 
+<h2 align="center">Develop token-agnostic mechanism for future-proof dapps</h2> 
 <h3 align="center">Generalize and simplify support for fungible and non-fungible tokens</h3>
 <p align="center" style="font-style: italic">⚠️<small>Contracts not audited</small>⚠️</p>
 
