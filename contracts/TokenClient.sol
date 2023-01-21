@@ -6,13 +6,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /*
     @title Token Client
-    @author Daniel Abalde | DaniGA#9856
+    @author Daniel Gonzalez Abalde
     @notice 
 */
 contract TokenClient is Ownable
-{
-    // Maps standard id to
-    bytes32[] internal _standards;
+{  
+    bytes32[] internal _standards; 
     mapping(bytes32=>address) internal _abstractions;
 
     address[] internal _allowedCallers;
@@ -44,12 +43,6 @@ contract TokenClient is Ownable
     }
 
     // ################################## EXTERNAL ##################################
-    
-    function getAbstraction(bytes32 standard) onlyAllowed() external view returns(address){ return _abstractions[standard]; }
-
-    function supportedStandards() onlyAllowed() external view returns(bytes32[] memory){ return _standards; }
-    
-    function supportsStandard(bytes32 standard) onlyAllowed() external view returns(bool){ return _supportsStandard(standard); }
     
     function isStandard(bytes32 standard, address contractAddress) onlyAllowed() standardSupported(standard) external view returns(bool) { 
         return TokenAbstraction(_abstractions[standard]).isStandard(contractAddress);
@@ -89,6 +82,12 @@ contract TokenClient is Ownable
         }
     }
 
+    function getAbstraction(bytes32 standard) onlyAllowed() external view returns(address){ return _abstractions[standard]; }
+
+    function supportedStandards() onlyAllowed() external view returns(bytes32[] memory){ return _standards; }
+    
+    function supportsStandard(bytes32 standard) onlyAllowed() external view returns(bool){ return _supportsStandard(standard); }
+    
     // ################################## ONLY OWNER ##################################
     
     function support(address tokenAbstraction) onlyOwner() external {

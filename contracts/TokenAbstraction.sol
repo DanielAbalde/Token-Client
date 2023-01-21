@@ -1,26 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Token.sol";
-import "./TokenSet.sol";
+import "./TokenData.sol"; 
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol"; 
- 
+  
 /*
-struct Token
-{
-    bytes32 Standard;
-    address Operator;
-    address Contract;
-    bool IsFungible; 
-    bytes32[] Ids;
-    uint256[] Amounts;
-}
-
-    ERC20 = new Token(type(IERC20).interfaceId, msg.sender, contractAddress, false, [], [amount]);
-    ERC721 = new Token(type(IERC721).interfaceId, msg.sender, contractAddress, true, [id], [1]);
-    ERC1155 = new Token(type(IERC1155).interfaceId, msg.sender, contractAddress, true, [id], [amount]);
+    @title Token Abstraction
+    @author Daniel Gonzalez Abalde
+    @notice Contains the functionality that share all token operators.
+    @dev Inherit from this contract to support new token standards.
 */
-
 abstract contract TokenAbstraction is ERC165
 {
     modifier onlyStandard(Token calldata token){
