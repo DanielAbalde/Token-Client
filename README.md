@@ -7,22 +7,22 @@
 
 ## 🧐 Overview
 
-[TokenClient.sol](contracts/TokenClient.sol) is a smart contract to support fungible and non-fungible token operations (such as sell/buy, swap, etc), making easy, quick, elegant, generic and future-proof implementations of token algorithms. You support the standards you want at any time and instead of calling their functions, you call the client and the client refers the call to the method of the specific standard. This way you can create token agnostic mechanisms, so that it works independently of the type of standard, and among many advantages, you will be able to support new standards in the future without needing to change code.
+[TokenClient.sol](contracts/TokenClient.sol) is a smart contract to support fungible and non-fungible token operations (such as sell/buy, swap, etc) in a generic way, making easy, quick, elegant, generic and future-proof implementations of token algorithms. You support the standards you want at any time, and instead of calling their functions, you call the client and this client refers the call to the method of the specific standard. This way you can create token operations using the same code for any standard.
 
 <p align="center"><img src="./imgs/TokenClientDiagram.PNG" alt="TokenClientDiagram"></p>
  
 You can reference a TokenClient instance on your dapp or inherit from TokenClient contract. To support the standards you want, you have to register on the client some [TokenAbstraction](contracts/TokenAbstraction.sol) concrete, such as [TokenERC20](contracts/concretes/TokenERC20.sol), [TokenERC721](contracts/concretes/TokenERC721.sol) or [TokenERC1155](contracts/concretes/TokenERC1155.sol), which have a few view functions, the transfer function and doesn't have storage. These are in charge of calling the methods of each standard, but you only have to make calls to your TokenClient instance, using methods such as `isOwner`, `balanceOf`, `isApproved` or `transfer`. Then you can focus on the logic of your dapp without worrying about standards support, separating this decision from the implementation and allowing it to be defined at any time.
 
 ## 🌟 Features
-- Easy to use, query and transfer any token from one place.
-- Quick to implement, focus on your contract logic in a token-agnostic manner.
+- Easy to use, query and transfer any token from one instance.
+- Quick to implement, focus on your contract logic and forget about standard specifications.
 - Generic functionality, make your dapp operate generically with tokens.
 - More elegant, reduces complexity and redundancy in your logic.
 - Future-proof, your contract will be able to support any new token standard.
-- Standard identification, knows what type of token a contract address is.
+- Standard identification, recognize what type of token a contract address is.
 - Transfer event, monitors when any token has been transferred.
 - Call permission, controls from where the client can be called.
-- Install as a package: `npm i @danielabalde/token-client`.
+- Install as a package: `npm i @danielabalde/token-client`. 
 
 
 ## 🚀 Motivation
