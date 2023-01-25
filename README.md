@@ -1,13 +1,13 @@
 <h1 align="center">Token Client</h1> 
-<h2 align="center">Develop token-agnostic mechanisms for future-proof dapps</h2> 
-<h3 align="center">Generalize and simplify support for fungible and non-fungible tokens</h3>
-<p align="center" style="font-style: italic">⚠️<small>Contracts not audited</small>⚠️</p>
+<h2 align="center">A token aggregattor to develop standard-agnositc mechanism</h2> 
+<h3 align="center">Share functionality between ERC20, ERC721, ERC1155 or any token standard</h3>
+<p align="center" style="font-style: italic">⚠️<small>Non-audited but open source contracts</small>⚠️</p>
 
 
 
 ## 🧐 Overview
 
-[TokenClient.sol](contracts/TokenClient.sol) is a smart contract to support fungible and non-fungible token operations (such as sell/buy, swap, etc) in a generic way, making easy, quick, elegant, generic and future-proof implementations of token algorithms. You support the standards you want at any time, and instead of calling their functions, you call the client and this client refers the call to the method of the specific standard. This way you can create token operations using the same code for all standards you want to support.
+[TokenClient.sol](contracts/TokenClient.sol) is a smart contract to support fungible and non-fungible token operations (such as sell/buy, swap, etc) in a generic way, making easy, quick, elegant, generic and future-proof implementations of token algorithms. You support the standards you want at any time, and instead of calling their functions, you call the client and this client refers the call to the method of the specific standard using [TokenAbstraction](contracts/TokenAbstraction.sol) instances. This way you can develop token operations  using the same code for all standards you want to support.
 
 <p align="center"><img src="./imgs/TokenClientDiagram.PNG" alt="TokenClientDiagram"></p>
  
