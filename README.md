@@ -37,7 +37,7 @@ On the other hand, I am quite convinced that in a few years there will be new st
 
 The shared functionality between standards is enough to help marketplaces and operators in many use cases. It can be extended particullary, as is the case of [TokenERC721](contracts/concretes/TokenERC721.sol), where it includes the `owner()` function. Or you can extending it with a custom token concrete by inheriting from [TokenAbstraction](contracts/TokenAbstraction.sol).
 
-This is how [TokenClient.sol](contracts/TokenClient.sol) looks like with the current shared functionality:
+This is how the current shared functionality of [TokenClient.sol](contracts/TokenClient.sol) looks like:
 ```solidity
     function isStandard(address contractAddress) external view returns(bool);
 
@@ -51,7 +51,6 @@ This is how [TokenClient.sol](contracts/TokenClient.sol) looks like with the cur
     function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) external view returns (bool);
     function transferSet(TokenSet calldata tokenSet, address from, address to) external returns (bool);
 
-}
 ```
 ## 📦 Token data layout
  [Token](contracts/TokenData.sol) represents for fungibles a quantity of tokens, and for non-fungibles an identificable token. [TokenSet](contracts/TokenData.sol) represents for non-fungible a set of unique tokens. The token id is of type `bytes32` instead of `uint256` to support more powerful NFTs.
