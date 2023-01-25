@@ -7,7 +7,7 @@
 
 ## 🧐 Overview
 
-[TokenClient](contracts/TokenClient.sol) is a smart contract to support fungible and non-fungible token operations (such as sell/buy, swap, etc) in a generic way, making easy, quick, elegant, generic and future-proof implementations of token algorithms.
+[TokenClient](contracts/TokenClient.sol) is a smart contract written in Solidity to support fungible and non-fungible token operations (such as sell/buy, swap, etc) in a generic way, making easy, quick, elegant, generic and future-proof implementations of token algorithms.
 
 Support new standards in your logic by simply registering a contract address in the client, which inherits from [TokenAbstraction](contracts/TokenAbstraction.sol). Your code interacts with the client instead of the ERC20, ERC721, or any other instance (the client will do it for you). So you don't need to commit your code to protocols, you can focus on the fun stuff, and make more elegant dapps by eliminating redundancy where all tokens share functionality (like isApproved or transfer or balanceOf), which is the functionality that many marketplaces and complex operators need to operate with tokens.
 
