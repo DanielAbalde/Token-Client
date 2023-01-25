@@ -7,9 +7,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /*
     @title Token Client
     @author Daniel Gonzalez Abalde
-    @notice Abstracts the functionality of any token standard into a single instance.
+    @notice Abstracts some functionality of any token standard into a single instance. 
     @dev Reference an instance in your contract or inherit from this contract, and
-         make calls to this client to operate with tokens.
+         make calls to this client to operate with tokens. It is Ownable to have call permissions.
 */
 contract TokenClient is Ownable
 {  
