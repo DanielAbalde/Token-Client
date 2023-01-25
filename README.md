@@ -35,27 +35,10 @@ On the other hand, I am quite convinced that in a few years there will be new st
 
 ## ⚙️ Token functionality
 
-The shared functionality between standards is enough to help marketplaces and operators in many use cases. It can be extended particullary, as is the case of [TokenERC721](contracts/concretes/TokenERC721.sol), where it includes the `owner()` function. Or you can extending it with a custom token operator by inheriting from [TokenAbstraction](contracts/TokenAbstraction.sol).
+The shared functionality between standards is enough to help marketplaces and operators in many use cases. It can be extended particullary, as is the case of [TokenERC721](contracts/concretes/TokenERC721.sol), where it includes the `owner()` function. Or you can extending it with a custom token concrete by inheriting from [TokenAbstraction](contracts/TokenAbstraction.sol).
 
-You can use [TokenClient.sol](contracts/TokenClient.sol) as an interface to have the same logic for any token standard you want to support. You can see the functionality in the following (note that is shown without function bodies for simplicity).
-
+This is how [TokenClient.sol](contracts/TokenClient.sol) looks like with the current shared functionality:
 ```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-import "./TokenAbstraction.sol"; 
-import "@openzeppelin/contracts/access/Ownable.sol";
- 
-contract TokenClient is Ownable
-{ 
-    (...)
-
-    event StandardSupported(bytes32 indexed standard);
-    event StandardReplaced(bytes32 indexed standard, address indexed previous);
-    event StandardUnsupported(bytes32 indexed standard);
-    event TokenTransfered(Token indexed token, address indexed from, address indexed to);
-    event TokenSetTransfered(TokenSet indexed tokenSet, address indexed from, address indexed to);
-
     function isStandard(address contractAddress) external view returns(bool);
 
     function isOwner(Token calldata token, address account) external view returns (bool);
@@ -65,10 +48,9 @@ contract TokenClient is Ownable
     
     function isOwnerSet(TokenSet calldata tokenSet, address account) external view returns (bool);
     function balanceOfSet(TokenSet calldata tokenSet, address account) external view returns (uint256[] memory);
-    function isApprovedSet(TokenSet calldata tokenSet, address account, address operator)  external view returns (bool);
+    function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) external view returns (bool);
     function transferSet(TokenSet calldata tokenSet, address from, address to) external returns (bool);
 
-    (...)
 }
 ```
 ## 📦 Token data
