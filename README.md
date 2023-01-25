@@ -1,5 +1,5 @@
 <h1 align="center">Token Client</h1> 
-<h2 align="center">A token aggregattor to develop standard-agnositc mechanism</h2> 
+<h2 align="center">A token aggregattor to develop standard-agnositc token operations</h2> 
 <h3 align="center">Share functionality between ERC20, ERC721, ERC1155 or any token standard</h3>
 <p align="center" style="font-style: italic">⚠️<small>Non-audited but open source contracts</small>⚠️</p>
 
