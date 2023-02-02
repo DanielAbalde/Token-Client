@@ -24,7 +24,7 @@ You can reference a TokenClient instance on your dapp or inherit from TokenClien
 - Standard identification, recognize what type of token a contract address is.
 - Transfer event, monitors when any token has been transferred.
 - Call permission, controls from where the client can be called.
-- Install as a package: `npm i @danielabalde/token-client`. 
+- ~~Install as a package: `npm i @danielabalde/token-client`.~~ The npm package is not being updated, while waiting for help from their technical support, please use: https://github.com/DanielAbalde/Token-Client/blob/891b99afa2273929fcef296d22df81c4650df972/contracts/TokenClient.sol to import the contract.
 
 
 ## 🚀 Motivation
@@ -96,7 +96,8 @@ Define token support for ERC20, ERC721 and ERC1155 in a minimal buy/sell mechani
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@danielabalde/token-client/contracts/TokenClient.sol";
+//import "@danielabalde/token-client/contracts/TokenClient.sol"; 
+import "https://github.com/DanielAbalde/Token-Client/blob/891b99afa2273929fcef296d22df81c4650df972/contracts/TokenClient.sol";
 
 contract Market
 {

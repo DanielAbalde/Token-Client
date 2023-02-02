@@ -59,7 +59,7 @@ contract TokenClient is Ownable
     function balanceOf(Token calldata token, address account) onlyAllowed() standardSupported(token.Standard) external view virtual returns (uint256){
         return TokenAbstraction(_abstractions[token.Standard]).balanceOf(token, account);
     }
-    function transfer(Token calldata token, address from, address to) onlyAllowed() standardSupported(token.Standard) external virtual returns (bool success){  
+    function transfer(Token calldata token, address from, address to) onlyAllowed() standardSupported(token.Standard) external payable virtual returns (bool success){  
         bytes memory resultData = _delegatecall(token.Standard, abi.encodeWithSelector(bytes4(0x8c5b2f8e), token, from, to)); 
         success = abi.decode(resultData, (bool));
         if(success){
@@ -76,7 +76,7 @@ contract TokenClient is Ownable
     function balanceOfSet(TokenSet calldata tokenSet, address account) onlyAllowed() standardSupported(tokenSet.Standard) external view virtual returns (uint256[] memory){
         return TokenAbstraction(_abstractions[tokenSet.Standard]).balanceOfSet(tokenSet, account);
     } 
-    function transferSet(TokenSet calldata tokenSet, address from, address to) onlyAllowed() standardSupported(tokenSet.Standard) external virtual returns (bool success){  
+    function transferSet(TokenSet calldata tokenSet, address from, address to) onlyAllowed() standardSupported(tokenSet.Standard) external payable virtual returns (bool success){  
         bytes memory resultData = _delegatecall(tokenSet.Standard, abi.encodeWithSelector(bytes4(0xd4144fc8), tokenSet, from, to)); 
         success = abi.decode(resultData, (bool));
         if(success){

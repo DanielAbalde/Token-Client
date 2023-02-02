@@ -28,12 +28,12 @@ abstract contract TokenAbstraction is ERC165
     function isOwner(Token calldata token, address account) onlyStandard(token) external view returns (bool) { return _isOwner(token, account); }
     function balanceOf(Token calldata token, address account) onlyStandard(token) external view returns (uint256){ return _balanceOf(token, account); }
     function isApproved(Token calldata token, address account, address operator) onlyStandard(token) external view returns (bool){ return _isApproved(token, account, operator); } 
-    function transfer(Token calldata token, address from, address to) onlyStandard(token) external returns (bool){ return _transfer(token, from, to); }
+    function transfer(Token calldata token, address from, address to) onlyStandard(token) external payable returns (bool){ return _transfer(token, from, to); }
     
     function isOwnerSet(TokenSet calldata tokenSet, address account) onlyStandardSet(tokenSet) external view returns (bool) { return _isOwnerSet(tokenSet, account); }
     function balanceOfSet(TokenSet calldata tokenSet, address account) onlyStandardSet(tokenSet) external view returns (uint256[] memory){ return _balanceOfSet(tokenSet, account); }
     function isApprovedSet(TokenSet calldata tokenSet, address account, address operator) onlyStandardSet(tokenSet) external view returns (bool){ return _isApprovedSet(tokenSet, account, operator); }
-    function transferSet(TokenSet calldata tokenSet, address from, address to) onlyStandardSet(tokenSet) external returns (bool){ return _transferSet(tokenSet, from, to); }
+    function transferSet(TokenSet calldata tokenSet, address from, address to) onlyStandardSet(tokenSet) external payable returns (bool){ return _transferSet(tokenSet, from, to); }
 
     function _isStandard(address contractAddress) internal view virtual returns(bool);
     function _isOwner(Token memory token, address account) internal view virtual returns (bool);

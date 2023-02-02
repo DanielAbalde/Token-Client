@@ -6,6 +6,7 @@ exports.ERC1155 = ethers.utils.formatBytes32String("ERC1155");
 exports.ERC777 = ethers.utils.formatBytes32String("ERC777");
 exports.LSP7 = ethers.utils.formatBytes32String("LSP7DigitalAsset");
 exports.LSP8 = ethers.utils.formatBytes32String("LSP8IdentifiableDigitalAsset");
+exports.ETH = ethers.utils.formatBytes32String("ETH");
  
 exports.tokenizeERC20 = function(contractAddress, amount){
     return [exports.ERC20, contractAddress, ethers.constants.HashZero, amount];
@@ -33,4 +34,7 @@ exports.tokenizeLSP8 = function(contractAddress, tokenId){
 }
 exports.tokenizeSetLSP8 = function(contractAddress, tokenIds){
     return [exports.LSP8, contractAddress, tokenIds.map(tokenId => ethers.utils.hexZeroPad(ethers.utils.hexlify(tokenId), 32)), tokenIds.map(tokenId => ethers.BigNumber.from(1))];
+}
+exports.tokenizeETH = function(amount){
+    return [exports.ETH, ethers.constants.AddressZero, ethers.constants.HashZero, amount];
 }

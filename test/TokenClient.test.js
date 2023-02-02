@@ -15,6 +15,7 @@ describe("TokenClient", function ()
         this.tokenERC1155 = await deploy("TokenERC1155"); 
         this.tokenLSP7 = await deploy("TokenLSP7");
         this.tokenLSP8 = await deploy("TokenLSP8");
+        this.tokenETH = await deploy("TokenETH");
  
         this.testERC20 = await deploy("TestERC20");
         this.testERC721 = await deploy("TestERC721");
@@ -30,7 +31,8 @@ describe("TokenClient", function ()
         console.log("TokenERC721:", this.tokenERC721.address);
         console.log("TokenERC1155:", this.tokenERC1155.address);  
         console.log("TokenLSP7:", this.tokenLSP7.address);
-        console.log("TokenLSP8:", this.tokenLSP8.address); 
+        console.log("TokenLSP8:", this.tokenLSP8.address);  
+        console.log("TokenETH:", this.tokenETH.address); 
 
         console.log("TestERC20:", this.testERC20.address);
         console.log("TestERC721:", this.testERC721.address);
@@ -90,6 +92,7 @@ describe("TokenClient", function ()
         await this.tokenClient.support(this.tokenERC1155.address); 
         await this.tokenClient.support(this.tokenLSP7.address);
         await this.tokenClient.support(this.tokenLSP8.address);
+        await this.tokenClient.support(this.tokenETH.address);
 
         this.supportedStandards = await this.tokenClient.supportedStandards();
         expect(this.supportedStandards[0]).to.be.equal(lib.ERC20);
@@ -97,6 +100,7 @@ describe("TokenClient", function ()
         expect(this.supportedStandards[2]).to.be.equal(lib.ERC1155); 
         expect(this.supportedStandards[3]).to.be.equal(lib.LSP7);
         expect(this.supportedStandards[4]).to.be.equal(lib.LSP8);
+        expect(this.supportedStandards[5]).to.be.equal(lib.ETH);
         
         await expect(this.tokenClient.support(this.tokenERC20.address))
             .to.be.revertedWith('TokenClient: tokenAbstraction already supported');
@@ -109,7 +113,7 @@ describe("TokenClient", function ()
             .to.emit(this.tokenClient, 'StandardUnsupported').withArgs(lib.ERC20);
         
         this.supportedStandards = await this.tokenClient.supportedStandards();
-        expect(this.supportedStandards.length).to.be.equal(4);
+        expect(this.supportedStandards.length).to.be.equal(5);
 
         await expect(await this.tokenClient.support(this.tokenERC20.address))
             .to.emit(this.tokenClient, 'StandardSupported').withArgs(lib.ERC20);
@@ -267,6 +271,37 @@ describe("TokenClient", function ()
         expect(newBalance.sub(balance)).to.be.equal(price);
 
         expect(await tokenClient.isOwner(token, this.account2.address)).to.be.true;
+    });
+
+    it("TokenETH", async function(){
+        const amount = ethers.BigNumber.from("10");
+        const token = lib.tokenizeETH(amount.toNumber());
+        
+        expect(await this.tokenClient.isOwner(token, this.account0.address)).to.be.true;
+        expect(await this.tokenClient.isApproved(token, this.account0.address, this.account0.address)).to.be.true;
+ 
+        const balance0 = await ethers.provider.getBalance(this.account0.address);
+        const balanceOf0 = await this.tokenClient.balanceOf(token, this.account0.address);
+        expect(balance0).to.be.equal(balanceOf0);
+ 
+        const balance1 = await ethers.provider.getBalance(this.account1.address);
+        const balanceOf1 = await this.tokenClient.balanceOf(token, this.account1.address);
+        expect(balance1).to.be.equal(balanceOf1);
+      
+        const tr = await this.tokenClient.transfer(token, this.account0.address, this.account1.address, {value: amount});
+        const re = await tr.wait();  
+        const gasUsed = re.gasUsed.mul(re.effectiveGasPrice); 
+
+        const newBalance0 = await ethers.provider.getBalance(this.account0.address);
+        const newBalanceOf0 = await this.tokenClient.balanceOf(token, this.account0.address);
+        expect(newBalance0).to.be.equal(newBalanceOf0); 
+        expect(balanceOf0.sub(amount).sub(gasUsed)).to.be.equal(newBalanceOf0);
+
+        const newBalance1 = await ethers.provider.getBalance(this.account1.address);
+        const newBalanceOf1 = await this.tokenClient.balanceOf(token, this.account1.address);
+        expect(newBalance1).to.be.equal(newBalanceOf1); 
+        expect(balanceOf1.add(amount)).to.be.equal(newBalanceOf1);
+
     });
 });
   

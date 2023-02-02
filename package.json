@@ -40,5 +40,11 @@
     "erc1155",
     "generic",
     "token"
-  ]
+  ],
+  "dependencies": {
+    "@lukso/lsp-smart-contracts": "^0.8.0",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@openzeppelin/contracts": "^4.8.1",
+    "hardhat": "^2.12.6"
+  }
 }
